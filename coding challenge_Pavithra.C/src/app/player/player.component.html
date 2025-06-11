@@ -1,0 +1,53 @@
+<div class="container">
+  <h2>Cricket Team Management</h2>
+
+  <form (ngSubmit)="savePlayer()">
+    <input type="text" [(ngModel)]="newPlayer.name" name="name" placeholder="Name" required />
+    <input type="number" [(ngModel)]="newPlayer.jerseyNumber" name="jersey" placeholder="Jersey Number" />
+    <input type="text" [(ngModel)]="newPlayer.role" name="role" placeholder="Role" required />
+    <input type="number" [(ngModel)]="newPlayer.totalMatches" name="totalMatches" placeholder="Total Matches" min="0" />
+    <input type="text" [(ngModel)]="newPlayer.teamName" name="teamName" placeholder="Team Name" required />
+    <input type="text" [(ngModel)]="newPlayer.country" name="country" placeholder="Country" required />
+    <textarea [(ngModel)]="newPlayer.description" name="description" placeholder="Description"></textarea>
+    <button type="submit">{{ editing ? 'Update' : 'Add' }} Player</button>
+    <button type="button" (click)="cancel()" *ngIf="editing">Cancel</button>
+  </form>
+
+
+  <div style="text-align: center; margin: 20px 0;">
+    <button (click)="displayPlayers()">Display Players</button>
+  </div>
+
+
+  <table *ngIf="showTable" border="1">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Jersey</th>
+      <th>Role</th>
+      <th>Total Matches</th>
+      <th>Team</th>
+      <th>Country</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+    <tr *ngFor="let player of players">
+      <td>{{ player.id }}</td>
+      <td>{{ player.name }}</td>
+      <td>{{ player.jerseyNumber }}</td>
+      <td>{{ player.role }}</td>
+      <td>{{ player.totalMatches }}</td>
+      <td>{{ player.teamName }}</td>
+      <td>{{ player.country }}</td>
+      <td>{{ player.description || '-' }}</td>
+      <td>
+        <button (click)="editPlayer(player)">Edit</button>
+        <button (click)="deletePlayer(player.id)">Delete</button>
+      </td>
+    </tr>
+    <tr *ngIf="players.length === 0">
+      <td colspan="9" style="text-align: center;">No players found.</td>
+    </tr>
+  </table>
+</div>
+
